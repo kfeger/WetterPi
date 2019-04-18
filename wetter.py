@@ -119,65 +119,6 @@ Background = 'black'
 Response = 0
 
 
-'''
-#------------------ Konfiguration --------------------------------
-
-def DoConfig():
-    
-    global pwHeaterLZ
-    global PeriodeLZ
-    global Kosten
-    global kWh
-    global Power
-    global debug
-
-    if not os.path.exists('/home/pi/wetter.conf'):
-        print 'keine conf'
-        configfile = open('/home/pi/wetter.conf', 'w')
-        config = ConfigParser.ConfigParser()
-        config.add_section('Kosten')
-        config.add_section('Zeiten')
-        config.set('Kosten', 'Kosten', '0.0')
-        config.set('Kosten', 'pro_kWh', '0.25')
-        config.set('Kosten', 'Leistung', '0.5')
-        config.set('Zeiten', 'HeizungLZ', '0.0')
-        config.set('Zeiten', 'PeriodeLZ', '0.0')
-        config.set('Debug', 'debug', '1')
-        with open('/home/pi/wetter.conf', 'wb') as configfile:
-            config.write(configfile)
-            configfile.close()
-    else:
-        config = ConfigParser.ConfigParser()
-        config.read('/home/pi/wetter.conf')
-        Kosten = config.getfloat('Kosten', 'Kosten')
-        kWh = config.getfloat('Kosten', 'pro_kWh')
-        Power = config.getfloat('Kosten', 'Leistung')
-        pwHeaterLZ = config.getfloat('Zeiten', 'HeizungLZ')
-        PeriodeLZ = config.getfloat('Zeiten', 'PeriodeLZ')
-        debug = config.getint('Debug', 'debug')
- 
-#----------------------------------------------------------------------
-
-def SaveConfig():
-    global pwHeaterLZ
-    global PeriodeLZ
-    global Kosten
-    global kWh
-    global Power
-    global debug
-
-    config = ConfigParser.ConfigParser()
-    config.read('/home/pi/wetter.conf')
-    config.set('Kosten', 'Kosten', str(Kosten))
-    config.set('Kosten', 'pro_kWh', str(kWh))
-    config.set('Kosten', 'Leistung', str(Power))
-    config.set('Zeiten', 'HeizungLZ', str(pwHeaterLZ))
-    config.set('Zeiten', 'PeriodeLZ', str(PeriodeLZ))
-    config.set('Debug', 'debug', str(debug))
-    with open('/home/pi/wetter.conf', 'wb') as configfile:
-        config.write(configfile)
-        configfile.close()
-'''
 
 #----------------- MQTT ---------------------------------------
 def on_connect(client, userdata, rc, test):
@@ -304,7 +245,7 @@ def GetOWM():       #OpenWeatherMap
     OWMIconPrefix = 'http://openweathermap.org/img/w/'    
     Wochentage = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag']
     try:
-        response = requests.get("http://api.openweathermap.org/data/2.5/forecast/daily?q=Dresden,DE&mode=json&units=metric&cnt=4&appid=d8d6936d60093d03c1d425f34fc09338")
+        response = requests.get("http://api.openweathermap.org/data/2.5/forecast/daily?q=Dresden,DE&mode=json&units=metric&cnt=4&appid=----hier der API-ID von OWM----")
         wetter = response.json()
         Tag0.config(text='Heute')
         Wetter0.config(text=str(int(round(wetter['list'][0]['temp']['day']))) + '/' + str(int(round(wetter['list'][0]['temp']['night']))))

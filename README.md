@@ -11,5 +11,6 @@ PIR-Sensor am GPIO. muss als root (sudo) gestartet werden.
 Das zentrale Programm ist wetter.py auf Basis Tkinter.<br>
 - verwendet Raspian System-Fonts<br>
 - SunTime.py berechnet Sonnenstände<br>
-- OpenWeatherMap wird für die Wettervorhersage verwendet.
+- OpenWeatherMap wird für die Wettervorhersage verwendet.<br>
+       Hier muss auch der API-ID eingetragen werden!!
 
